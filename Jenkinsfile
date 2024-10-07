@@ -19,10 +19,15 @@ pipeline {
     }
 
     stage('Restore NuGet Packages') {
-      steps {
-        sh 'dotnet restore'
-      }
-    }
+        agent {
+            docker {
+                image 'mcr.microsoft.com/dotnet/sdk:8.0'  // Utilise l'image Docker officielle du SDK .NET
+                args '-v /root/.nuget/packages:/root/.nuget/packages'  // Monte le cache NuGet pour la persistance
+            }
+        }
+        steps {
+            sh 'dotnet restore'
+        }
 
     stage('Build') {
       steps {
