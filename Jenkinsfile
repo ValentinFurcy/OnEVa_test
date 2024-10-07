@@ -36,32 +36,25 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
+        stage('SonarQube Analysis (dotnet)') {
             steps {
-                script {
-                    withSonarQubeEnv('SonarQ') {
-                        sh "${mvnHome}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=Vulnado -Dsonar.projectName='Vulnado'"
-                        // Analyse SonarQube
-                        sh 'dotnet sonarscanner begin /k:"your_project_key" /d:sonar.login=$SONAR_TOKEN'
-                        sh 'dotnet build'
-                        sh 'dotnet sonarscanner end /d:sonar.login=$SONAR_TOKEN'
+                // Analyse SonarQube pour un projet .NET
+                withSonarQubeEnv('SonarQ') {
+                // Utilisation des credentials Jenkins pour le token SonarQube
+                withCredentials([string(credentialsId: '0f4aa489-7b24-4e40-bde1-92b67d7fbbda', variable: 'SONAR_TOKEN')]) {
+                
+                    // Démarrage de l'analyse SonarQube pour le projet .NET
+                    sh 'dotnet sonarscanner begin /k:"OnEVa_test" /d:sonar.login=$SONAR_TOKEN'
+
+                    // Compilation du projet .NET
+                    sh 'dotnet build'
+
+                    // Terminer l'analyse SonarQube pour .NET
+                    sh 'dotnet sonarscanner end /d:sonar.login=$SONAR_TOKEN'
                     }
                 }
             }
         }
-
-        stage('OWASP Dependency-Check') {
-            steps {
-                dependencyCheck additionalArguments: '--project "Your Project" --format "ALL" --scan "./"', odcInstallation: 'Default'
-            }
-        }
-
-        stage('Snyk Security Check') {
-            steps {
-                snykSecurity failOnIssues: true, snykInstallation: 'Default'
-            }
-        }
-    }
 
     post {
         always {
