@@ -28,6 +28,7 @@ pipeline {
         steps {
             sh 'dotnet restore'
         }
+    }
 
     stage('Build') {
       steps {
