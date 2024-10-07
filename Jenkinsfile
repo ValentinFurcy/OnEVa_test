@@ -55,7 +55,8 @@ pipeline {
                 }
             }
         }
-
+    }
+    
     post {
         always {
             // Archiver les rapports de build et les résultats des tests
