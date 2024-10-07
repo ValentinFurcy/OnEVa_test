@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Récupérer le code depuis GitHub
-                git 'https://github.com/ValentinFurcy/OnEVa_test.git'
+                git -b main --single-branch 'https://github.com/ValentinFurcy/OnEVa_test.git'
             }
         }
         
