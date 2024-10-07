@@ -4,11 +4,7 @@ pipeline {
     tools {
         // Utilisation du SDK .NET 8.0 et de NuGet
         dotnet 'dotnet-8.0'
-        msbuild 'MSBuild'
-    }
-
-    environment {
-        SONARQUBE_URL = 'SonarQ'  // Nom du serveur SonarQube configuré dans Jenkins
+        msbuild 'MSSBuild2022'
     }
 
     stages {
