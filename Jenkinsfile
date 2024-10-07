@@ -22,7 +22,7 @@ pipeline {
     }
 
     // Étape 3 : Restaurer les dépendances
-    stage('Restore Dependencies') {
+    stage('Restore NuGet Packages') {
       steps {
         sh 'dotnet restore'
       }
