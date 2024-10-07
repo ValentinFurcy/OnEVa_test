@@ -60,7 +60,12 @@ pipeline {
     post {
         success {
             // Publish test results to GitHub
-            xunit 'TestResults/*.trx'
+                always {
+                // Utilisation de xUnit pour publier les résultats des tests
+                xunit (
+                    tools: [MSTest(pattern: 'TestResults/*.trx', skipNoTestFiles: true, stopProcessingIfError: true)]
+                )
+            }
             // Notify GitHub of successful verification
             echo 'Notifying GitHub of successful build...'
             script {
