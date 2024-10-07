@@ -56,38 +56,4 @@ pipeline {
             }
         }
     }
-    
-    post {
-        success {
-            // Publish test results to GitHub
-                always {
-                // Utilisation de xUnit pour publier les résultats des tests
-                xunit (
-                    tools: [MSTest(pattern: 'TestResults/*.trx', skipNoTestFiles: true, stopProcessingIfError: true)]
-                )
-            }
-            // Notify GitHub of successful verification
-            echo 'Notifying GitHub of successful build...'
-            script {
-               // Message to send
-                def message = "The build was successful!"
-
-                // Using the 'httpRequest' Jenkins plugin to send the request
-                def response = httpRequest (
-                    url: githubApiUrl,
-                    httpMode: 'POST',
-                    contentType: 'APPLICATION_JSON',
-                    requestBody: "{\"body\": \"$message\"}",
-                    authentication: 'GITHUB_TOKEN'  // Nom de l'authentification configuré dans Jenkins
-            )
-
-            // Log the response
-            echo "Response: ${response.status}"
-            }
-        }
-        failure {
-            // Notify GitHub that verification has failed
-            echo 'Notifying GitHub of failed build...'
-        }
-    }
 }
