@@ -10,7 +10,7 @@ pipeline {
         stage ('Checkout') {
             steps {
                 script {
-                    sh "git clone https://github.com/ValentinFurcy/OnEVa_test.git
+                    sh git clone 'https://github.com/ValentinFurcy/OnEVa_test.git'
                 }   
             }
         }
