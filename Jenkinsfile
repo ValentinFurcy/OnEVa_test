@@ -13,7 +13,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Récupérer le code depuis GitHub
-                git 'https://github.com/yourusername/your-dotnet-project'
+                git 'https://github.com/ValentinFurcy/OnEVa_test.git'
             }
         }
         
