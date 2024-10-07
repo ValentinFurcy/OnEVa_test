@@ -4,7 +4,6 @@ pipeline {
     tools {
         // Utilisation du SDK .NET 8.0 et de NuGet
         dotnetsdk 'sdk.NET8.0.8'
-        msbuild 'MSBuild2022'
     }
 
     stages {
