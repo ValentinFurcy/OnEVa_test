@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'windows'  // Spécifiez le label de l'agent Windows
-    }
+    agent any
 
     tools {
         // Utilisation du SDK .NET 8.0 et de NuGet
