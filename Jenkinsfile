@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   tools {
-    dotnetsdk 'SDK-Digiliberte'  // Nom de ton installation .NET SDK configurée dans Jenkins
+    dotnetsdk 'sdk.NET8.0.8'  // Nom de ton installation .NET SDK configurée dans Jenkins
   }
 
   stages {
@@ -17,7 +17,7 @@ pipeline {
     // Étape 2 : Cloner le dépôt GitHub
     stage('Checkout') {
       steps {
-        git branch: 'main', url: ''
+        git branch: 'main', url: 'https://github.com/ValentinFurcy/OnEVa_test.git'
       }
     }
 
