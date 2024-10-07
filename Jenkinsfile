@@ -38,7 +38,7 @@ pipeline {
     // Étape 5 : Exécuter les tests
     stage('Test') {
       steps {
-         sh'dotnet test RepositoriesTests/RepositoriesTests.csproj'
+         sh'dotnet test Test_CI.csproj'
       }
     }
 
