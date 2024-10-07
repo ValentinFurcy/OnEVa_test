@@ -58,10 +58,31 @@ pipeline {
     }
     
     post {
-        always {
-            // Archiver les rapports de build et les résultats des tests
-            archiveArtifacts artifacts: '**/bin/**/*.dll', allowEmptyArchive: true
-            junit '**/TestResults/*.xml'
+        success {
+            // Publish test results to GitHub
+            junit 'TestResults/*.trx'
+            // Notify GitHub of successful verification
+            echo 'Notifying GitHub of successful build...'
+            script {
+               // Message to send
+                def message = "The build was successful!"
+
+                // Using the 'httpRequest' Jenkins plugin to send the request
+                def response = httpRequest (
+                    url: githubApiUrl,
+                    httpMode: 'POST',
+                    contentType: 'APPLICATION_JSON',
+                    requestBody: "{\"body\": \"$message\"}",
+                    authentication: 'GITHUB_TOKEN'  // Nom de l'authentification configuré dans Jenkins
+            )
+
+            // Log the response
+            echo "Response: ${response.status}"
+            }
+        }
+        failure {
+            // Notify GitHub that verification has failed
+            echo 'Notifying GitHub of failed build...'
         }
     }
 }
