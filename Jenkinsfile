@@ -60,7 +60,7 @@ pipeline {
     post {
         success {
             // Publish test results to GitHub
-            junit 'TestResults/*.trx'
+            xunit 'TestResults/*.trx'
             // Notify GitHub of successful verification
             echo 'Notifying GitHub of successful build...'
             script {
