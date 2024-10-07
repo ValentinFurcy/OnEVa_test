@@ -1,59 +1,62 @@
 pipeline {
-    agent any
+  agent any
 
-    tools {
-        // Utilisation du SDK .NET 8.0 et de NuGet
-        dotnetsdk 'sdk.NET8.0.8'
+  tools {
+    dotnetsdk 'SDK-Digiliberte'  // Nom de ton installation .NET SDK configurée dans Jenkins
+  }
+
+  stages {
+
+    // Étape 1 : Nettoyer l'espace de travail
+    stage('Clean Workspace') {
+      steps {
+        cleanWs()  // Nettoie l'espace de travail
+      }
     }
 
-    stages {
-        stage ('Checkout') {
-            steps {
-                script {
-                    sh git clone 'https://github.com/ValentinFurcy/OnEVa_test.git'
-                }   
-            }
-        }
-        
-        stage('Restore NuGet Packages') {
-            steps {
-                // Restaurer les paquets NuGet
-                sh 'dotnet restore'
-            }
-        }
-
-        stage('Build') {
-            steps {
-                // Compiler le projet avec MSBuild
-                sh 'dotnet build --configuration Release'
-            }
-        }
-
-        stage('Run Tests') {
-            steps {
-                // Exécuter les tests unitaires
-                sh 'dotnet test --configuration Release --no-build'
-            }
-        }
-
-        stage('SonarQube Analysis (dotnet)') {
-            steps {
-                // Analyse SonarQube pour un projet .NET
-                withSonarQubeEnv('SonarQ') {
-                // Utilisation des credentials Jenkins pour le token SonarQube
-                withCredentials([string(credentialsId: '0f4aa489-7b24-4e40-bde1-92b67d7fbbda', variable: 'SONAR_TOKEN')]) {
-                
-                    // Démarrage de l'analyse SonarQube pour le projet .NET
-                    sh 'dotnet sonarscanner begin /k:"OnEVa_test" /d:sonar.login=$SONAR_TOKEN'
-
-                    // Compilation du projet .NET
-                    sh 'dotnet build'
-
-                    // Terminer l'analyse SonarQube pour .NET
-                    sh 'dotnet sonarscanner end /d:sonar.login=$SONAR_TOKEN'
-                    }
-                }
-            }
-        }
+    // Étape 2 : Cloner le dépôt GitHub
+    stage('Checkout') {
+      steps {
+        git branch: 'main', url: ''
+      }
     }
+
+    // Étape 3 : Restaurer les dépendances
+    stage('Restore Dependencies') {
+      steps {
+        sh 'dotnet restore'
+      }
+    }
+
+    // Étape 4 : Construire le projet
+    stage('Build') {
+      steps {
+        sh 'dotnet build --configuration Release'
+      }
+    }
+
+    // Étape 5 : Exécuter les tests
+    stage('Test') {
+      steps {
+         sh'dotnet test RepositoriesTests/RepositoriesTests.csproj'
+      }
+    }
+
+    // Étape 6 : Publier le projet
+    stage('Publish') {
+      steps {
+        sh 'dotnet publish --configuration Release --output ./publish'
+      }
+    }
+  }
+
+  // Notification en cas de succès ou d'échec
+  post {
+    success {
+      echo 'Le build a été réalisé avec succès.'
+    }
+    failure {
+      echo 'Le build a échoué.'
+    }
+  }
 }
