@@ -13,6 +13,7 @@ pipeline {
         }
         stage('Restore Dependencies') {
             steps {
+                sh 'cd OnEVa_API/OnEVa_API'
                 sh 'dotnet restore'
             }
         }
