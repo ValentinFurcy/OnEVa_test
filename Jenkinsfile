@@ -16,7 +16,7 @@ pipeline {
                 sh "ls"
                 sh 'cd OnEVa_API'
                 sh 'echo $PWD'
-                sh 'dotnet restore'
+                sh 'dotnet restore OnEVa_API'
             }
         }
         stage('Build') {
