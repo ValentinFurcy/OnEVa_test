@@ -6,6 +6,10 @@ pipeline {
         SONARQUBE_SERVER = 'MySonarQubeServer' // Nom du serveur défini dans la configuration Jenkins
     }
     stages {
+        stage('Checkout'){
+            steps{
+                git branch: 'main', credentialsId: '4e979ea0-06ab-4b0a-ac8e-a20f03916f29', url: 'https://github.com/ValentinFurcy/OnEVa_test.git'
+        }
         stage('Restore Dependencies') {
             steps {
                 sh 'dotnet restore'
