@@ -12,12 +12,6 @@ pipeline {
       }
     }
 
-    stage('Checkout') {
-      steps {
-        git branch: 'main', url: 'https://github.com/ValentinFurcy/OnEVa_test.git'
-      }
-    }
-
     stage('Restore NuGet Packages') {
         agent {
             docker {
