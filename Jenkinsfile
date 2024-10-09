@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'dotnet build --configuration Release'
+                sh 'dotnet build OnEVa_API --configuration Release'
             }
         }
         stage('Run Tests') {
