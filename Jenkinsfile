@@ -34,11 +34,11 @@ pipeline {
                 sh "dotnet publish src/LibraryManagement/LibraryManagement.csproj --configuration Release -o ${BUILD_PATH}"
             }
         }
-        /stage('SonarQube Analysis') {
-            /steps {
-                /script {
-                    /def scannerHome = "/opt/sonar-scanner/SonarScanner.MSBuild.dll"
-                    /def scannerHome = tool name: 'SonarScanner for MSBuild 9.0.0', type: 'hudson.plugins.sonar.MsBuildSQRunnerInstallation'
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    def scannerHome = "/opt/sonar-scanner/SonarScanner.MSBuild.dll"
+                    def scannerHome = tool name: 'SonarScanner for MSBuild 9.0.0', type: 'hudson.plugins.sonar.MsBuildSQRunnerInstallation'
 
                     Récupérer le token depuis les credentials Jenkins
                     withCredentials([string(credentialsId: '78cccfbd-7fe9-4046-b77c-cb7973f3b0b7', variable: 'SONAR_TOKEN')]) {
