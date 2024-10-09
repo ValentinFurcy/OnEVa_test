@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         BUILD_PATH = 'output' // Répertoire où les artefacts sont générés
-        SONARQUBE_SERVER = 'MySonarQubeServer' // Nom du serveur défini dans la configuration Jenkins
+        SONARQUBE_SERVER = 'SonarQube' // Nom du serveur défini dans la configuration Jenkins
     }
     stages {
         stage('Restore Dependencies') {
