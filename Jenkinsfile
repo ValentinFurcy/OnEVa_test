@@ -28,6 +28,7 @@ pipeline {
             steps {
                 script {
                     // Run unit tests and check status
+                    echo ls
                     def testResult = sh(script: 'dotnet test OnEVa_API --logger:trx', returnStatus: true)
                     if (testResult != 0) {
                         error("Unit tests failed. Please fix the issues before merging.")
