@@ -50,10 +50,10 @@ pipeline {
                     def scannerHome = tool name: 'SonarScanner', type: 'hudson.plugins.sonar.MsBuildSQRunnerInstallation'
 
                     // Récupérer le token depuis les credentials Jenkins
+                    echo 'Récupération du token dans les credentials'
                     withCredentials([string(credentialsId: 'SonarQube', variable: 'SONAR_TOKEN')]) {
                     withSonarQubeEnv(SONARQUBE_SERVER) {
                         echo "Starting SonarQube analysis..."
-                    
                         // Étape "begin" pour démarrer l'analyse
                         sh "dotnet OnEVa_API ${scannerHome}/SonarScanner.MSBuild.dll begin /k:'JenkinsDemo' /d:sonar.login=${SONAR_TOKEN} /d:sonar.host.url=${SONARQUBE_URL}"
                     
@@ -65,6 +65,7 @@ pipeline {
                     
                         echo 'Analyse terminée'
                 }
+                echo 'Fin script'
             }
         }
     }
