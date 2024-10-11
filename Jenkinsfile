@@ -47,7 +47,7 @@ pipeline {
             steps {
                 script {
                     echo 'Début de l\'analyse SonarQube'
-                    def scannerHome = tool name: 'SonarScanner for MSBuild 9.0.0', type: 'hudson.plugins.sonar.MsBuildSQRunnerInstallation'
+                    def scannerHome = tool name: 'SonarScanner', type: 'hudson.plugins.sonar.MsBuildSQRunnerInstallation'
 
                     // Récupérer le token depuis les credentials Jenkins
                     withCredentials([string(credentialsId: 'SonarQube', variable: 'SONAR_TOKEN')]) {
