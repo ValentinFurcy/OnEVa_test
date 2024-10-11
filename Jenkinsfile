@@ -58,9 +58,11 @@ pipeline {
                         sh "dotnet OnEVa_API ${scannerHome}/SonarScanner.MSBuild.dll begin /k:'JenkinsDemo' /d:sonar.login=${SONAR_TOKEN} /d:sonar.host.url=${SONARQUBE_URL}"
                     
                         // Build du projet (obligatoire après "begin")
+                        echo "build projet"
                         sh 'dotnet build OnEVa_API --configuration Release'
                     
                         // Étape "end" pour terminer l'analyse
+                        echo "End"
                         sh "dotnet OnEVa_API ${scannerHome}/SonarScanner.MSBuild.dll end /d:sonar.login=${SONAR_TOKEN}"
                     
                         echo 'Analyse terminée'
