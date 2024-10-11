@@ -39,7 +39,7 @@ pipeline {
         // }
         stage('Publish') {
             steps {
-                sh "dotnet publish --configuration Release -o ${BUILD_PATH}"
+                sh "dotnet publish OnEVa_API --configuration Release -o ${BUILD_PATH}"
                 // sh "dotnet publish OnEva_API/OnEVa_API.csproj --configuration Release -o ${BUILD_PATH}"
             }
         }
