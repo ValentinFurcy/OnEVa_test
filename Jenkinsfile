@@ -39,7 +39,8 @@ pipeline {
         // }
         stage('Publish') {
             steps {
-                sh "dotnet publish OnEva_API/OnEVa_API.csproj --configuration Release -o ${BUILD_PATH}"
+                sh "dotnet publish --configuration Release -o ${BUILD_PATH}"
+                // sh "dotnet publish OnEva_API/OnEVa_API.csproj --configuration Release -o ${BUILD_PATH}"
             }
         }
         stage('SonarQube Analysis') {
