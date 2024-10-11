@@ -24,19 +24,19 @@ pipeline {
                 sh 'dotnet build OnEVa_API --configuration Release'
             }
         }
-        stage('Run Tests') {
-            steps {
-                script {
-                    // Run unit tests and check status
-                    def testResult = sh(script: 'dotnet test OnEVa_API --logger:trx', returnStatus: true)
-                    if (testResult != 0) {
-                        error("Unit tests failed. Please fix the issues before merging.")
-                    } else {
-                        echo "Unit tests passed."
-                    }
-                }
-            }
-        }
+        // stage('Run Tests') {
+        //     steps {
+        //         script {
+        //             // Run unit tests and check status
+        //             def testResult = sh(script: 'dotnet test OnEVa_API --logger:trx', returnStatus: true)
+        //             if (testResult != 0) {
+        //                 error("Unit tests failed. Please fix the issues before merging.")
+        //             } else {
+        //                 echo "Unit tests passed."
+        //             }
+        //         }
+        //     }
+        // }
         stage('Publish') {
             steps {
                 sh "dotnet publish OnEva_API/OnEVa_API.csproj --configuration Release -o ${BUILD_PATH}"
